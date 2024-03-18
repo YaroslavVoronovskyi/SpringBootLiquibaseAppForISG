@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: v1 create sales
+      author: Yaroslav Voronovskyi
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: sales
+      changes:
+        - createTable:
+            tableName: sales
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: book_ref
+                  type: int
+                  constraints:
+                    foreignKeyName: sales_books_fk
+                    referencedTableName: books(id)
+              - column:
+                  name: quantity
+                  type: int
+                  constraints:
+                    nullable: true
+              - column:
+                  name: sale_date
+                  type: date
+                  constraints:
+                    nullable: false

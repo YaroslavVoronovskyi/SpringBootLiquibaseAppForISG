@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: v1 create books
+      author: Yaroslav Voronovskyi
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: books
+      changes:
+        - createTable:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author_ref
+                  type: int
+                  constraints:
+                    foreignKeyName: books_authors_fk
+                    referencedTableName: authors(id)
+              - column:
+                  name: publisher_ref
+                  type: int
+                  constraints:
+                    foreignKeyName: books_publishers_fk
+                    referencedTableName: publishers(id)
